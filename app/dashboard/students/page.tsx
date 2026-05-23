@@ -23,20 +23,22 @@ export default function StudentsPage() {
   const [students, setStudents] =
     useState<Student[]>([]);
 
-  const [name, setName] = useState("");
+  const [name, setName] =
+    useState<string>("");
 
   const [email, setEmail] =
-    useState("");
+    useState<string>("");
 
   const [loading, setLoading] =
-    useState(false);
+    useState<boolean>(false);
 
   const [error, setError] =
-    useState("");
+    useState<string>("");
 
   const role =
-    localStorage.getItem("role");
-
+  typeof window !== "undefined"
+    ? localStorage.getItem("role")
+    : "";
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -62,7 +64,8 @@ export default function StudentsPage() {
 
   const loadStudents = async () => {
     try {
-      const data = await getStudents();
+      const data =
+        await getStudents();
 
       setStudents(data);
     } catch (error) {

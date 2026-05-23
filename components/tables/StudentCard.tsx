@@ -1,6 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 
 interface StudentCardProps {
   id: number;
@@ -32,9 +35,10 @@ export default function StudentCard({
   const [isEditing, setIsEditing] =
     useState(false);
 
-  const role =
-    localStorage.getItem("role");
-
+const role =
+  typeof window !== "undefined"
+    ? localStorage.getItem("role")
+    : "";
   return (
     <div className="rounded border p-4">
       {isEditing ? (

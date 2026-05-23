@@ -2,7 +2,9 @@
 
 export default function DashboardPage() {
   const role =
-    localStorage.getItem("role");
+    typeof window !== "undefined"
+      ? localStorage.getItem("role")
+      : "";
 
   return (
     <div>
