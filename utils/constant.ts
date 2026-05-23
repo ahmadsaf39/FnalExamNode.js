@@ -17,12 +17,24 @@ export const TOKEN_KEY = "token";
 export const APP_NAME =
   "Student Management System";
 
-export const STATIC_USER = {
-  id: 1,
+export const STATIC_USERS = [
+  {
+    id: 1,
 
-  username: "admin",
+    username: "admin",
 
-  password: "1234",
+    password: "1234",
 
-  role: ROLES.ADMIN,
-};
+    role: ROLES.ADMIN,
+  },
+
+  {
+    id: 2,
+
+    username: "user",
+
+    password: "1234",
+
+    role: ROLES.USER,
+  },
+];

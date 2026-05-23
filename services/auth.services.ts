@@ -1,17 +1,18 @@
 import {
-  STATIC_USER,
+  STATIC_USERS,
 } from "@/utils/constant";
 
 export const login = async (
   username: string,
   password: string
 ) => {
-  if (
-    username ===
-      STATIC_USER.username &&
-    password ===
-      STATIC_USER.password
-  ) {
+  const user = STATIC_USERS.find(
+    (user) =>
+      user.username === username &&
+      user.password === password
+  );
+
+  if (user) {
     const response = await fetch(
       "/api/send-otp",
       {
@@ -29,7 +30,7 @@ export const login = async (
 
     localStorage.setItem(
       "role",
-      STATIC_USER.role
+      user.role
     );
 
     return {
@@ -51,6 +52,11 @@ export const verifyOtp = async (
     );
 
   if (otp === generatedOtp) {
+    localStorage.setItem(
+      "token",
+      "fake-jwt-token"
+    );
+
     return {
       accessToken:
         "fake-jwt-token",

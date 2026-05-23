@@ -6,6 +6,7 @@ interface StudentCardProps {
   id: number;
   name: string;
   email: string;
+
   onDelete: (id: number) => void;
 
   onEdit: (
@@ -30,6 +31,9 @@ export default function StudentCard({
 
   const [isEditing, setIsEditing] =
     useState(false);
+
+  const role =
+    localStorage.getItem("role");
 
   return (
     <div className="rounded border p-4">
@@ -80,25 +84,27 @@ export default function StudentCard({
 
           <p>{email}</p>
 
-          <div className="mt-4 flex gap-2">
-            <button
-              onClick={() =>
-                setIsEditing(true)
-              }
-              className="bg-blue-500 px-4 py-2 text-white"
-            >
-              Edit
-            </button>
+          {role === "Admin" && (
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() =>
+                  setIsEditing(true)
+                }
+                className="bg-blue-500 px-4 py-2 text-white"
+              >
+                Edit
+              </button>
 
-            <button
-              onClick={() =>
-                onDelete(id)
-              }
-              className="bg-red-500 px-4 py-2 text-white"
-            >
-              Delete
-            </button>
-          </div>
+              <button
+                onClick={() =>
+                  onDelete(id)
+                }
+                className="bg-red-500 px-4 py-2 text-white"
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
