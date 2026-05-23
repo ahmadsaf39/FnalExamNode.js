@@ -1,4 +1,5 @@
-import Link from "next/link";
+import Navbar from "@/components/layouts/Navbar";
+import Sidebar from "@/components/layouts/Sidebar";
 
 export default function DashboardLayout({
   children,
@@ -6,30 +7,16 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex min-h-screen">
-      <aside className="w-64 border-r p-6">
-        <h2 className="mb-6 text-2xl font-bold">
-          Dashboard
-        </h2>
+    <div className="min-h-screen">
+      <Navbar />
 
-        <nav className="flex flex-col gap-4">
-          <Link href="/dashboard">
-            Home
-          </Link>
+      <div className="flex">
+        <Sidebar />
 
-          <Link href="/dashboard/students">
-            Students
-          </Link>
-
-          <Link href="/dashboard/users">
-            Users
-          </Link>
-        </nav>
-      </aside>
-
-      <main className="flex-1 p-6">
-        {children}
-      </main>
+        <main className="flex-1 p-6">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }
