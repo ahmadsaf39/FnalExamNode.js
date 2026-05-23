@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import StudentCard from "@/components/tables/StudentCard";
+
 import {
   getStudents,
   deleteStudent,
@@ -122,25 +124,13 @@ export default function StudentsPage() {
 
       <div className="space-y-4">
         {students.map((student) => (
-          <div
+          <StudentCard
             key={student.id}
-            className="rounded border p-4"
-          >
-            <h2 className="font-bold">
-              {student.name}
-            </h2>
-
-            <p>{student.email}</p>
-
-            <button
-              onClick={() =>
-                handleDelete(student.id)
-              }
-              className="mt-4 bg-red-500 px-4 py-2 text-white"
-            >
-              Delete
-            </button>
-          </div>
+            id={student.id}
+            name={student.name}
+            email={student.email}
+            onDelete={handleDelete}
+          />
         ))}
       </div>
     </div>
