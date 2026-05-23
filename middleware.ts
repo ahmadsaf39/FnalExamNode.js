@@ -1,16 +1,37 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
-  const token = request.cookies.get("token");
+export function middleware(
+  request: NextRequest
+) {
+  const token =
+    request.cookies.get("token");
+
+  const pathname =
+    request.nextUrl.pathname;
 
   const isAuthPage =
-    request.nextUrl.pathname === "/login" ||
-    request.nextUrl.pathname === "/otp";
+    pathname === "/login" ||
+    pathname === "/otp";
 
-  if (!token && !isAuthPage) {
+  const isDashboardRoute =
+    pathname.startsWith("/dashboard");
+
+  if (
+    !token &&
+    isDashboardRoute
+  ) {
     return NextResponse.redirect(
       new URL("/login", request.url)
+    );
+  }
+
+  if (token && isAuthPage) {
+    return NextResponse.redirect(
+      new URL(
+        "/dashboard",
+        request.url
+      )
     );
   }
 
@@ -18,5 +39,9 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/login",
+    "/otp",
+  ],
 };
