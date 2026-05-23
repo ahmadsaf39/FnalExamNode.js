@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import toast from "react-hot-toast";
 
-import { login } from "@/services/auth.service";
+import { login } from "@/services/auth.services";
 
 export default function LoginPage() {
   const router = useRouter();

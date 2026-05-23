@@ -16,3 +16,12 @@ export const TOKEN_KEY = "token";
 
 export const APP_NAME =
   "Student Management System";
+
+export const STATIC_USER = {
+  username: "admin",
+  password: "1234",
+  role: ROLES.ADMIN,
+};
+
+export const STATIC_OTP =
+  "0000";
