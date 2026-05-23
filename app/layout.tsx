@@ -1,8 +1,11 @@
 import "./globals.css";
 
+import { Toaster } from "react-hot-toast";
+
 export const metadata = {
   title: "Student Management System",
-  description: "Next.js Final Exam Project",
+  description:
+    "Next.js Final Exam Project",
 };
 
 export default function RootLayout({
@@ -12,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Toaster position="top-right" />
+
+        {children}
+      </body>
     </html>
   );
 }

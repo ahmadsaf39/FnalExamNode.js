@@ -1,8 +1,12 @@
 "use client";
 
 import { useState } from "react";
+
 import { useRouter } from "next/navigation";
-import { login } from "@/services/auth.services";
+
+import toast from "react-hot-toast";
+
+import { login } from "@/services/auth.service";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -15,16 +19,22 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const data = await login(
+      await login(
         username,
         password
       );
 
-      console.log(data);
+      toast.success(
+        "Login successful"
+      );
 
       router.push("/otp");
     } catch (error) {
       console.error(error);
+
+      toast.error(
+        "Invalid username or password"
+      );
     }
   };
 
