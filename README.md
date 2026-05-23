@@ -1,36 +1,335 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Student Management System
 
-## Getting Started
+A full-stack Student Management System built using:
 
-First, run the development server:
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- SQLite
+- Nodemailer
+- Axios
+- OTP Authentication
+- Role-Based Authorization
+- Vercel Deployment
+
+---
+
+# Live Demo
+
+```text
+https://fnal-exam-node-js.vercel.app
+```
+
+---
+
+# Features
+
+## Authentication System
+
+- Username & Password Login
+- OTP Email Verification
+- Protected Routes
+- Role-Based Authorization
+- AccessToken & RefreshToken Simulation
+
+---
+
+## Admin Features
+
+Admin can:
+
+- Create students
+- Edit students
+- Delete students
+- View students
+
+---
+
+## User Features
+
+User can:
+
+- View students only
+
+---
+
+## Students CRUD
+
+- Create Student
+- Read Students
+- Update Student
+- Delete Student
+
+---
+
+## Database
+
+- SQLite Database
+- Real SQL CRUD operations
+- Local lightweight database
+
+---
+
+## Deployment
+
+- GitHub Integration
+- CI/CD Pipeline
+- Vercel Deployment
+- Automatic Redeployment
+
+---
+
+# Technologies Used
+
+| Technology      | Purpose            |
+| --------------- | ------------------ |
+| Next.js         | Frontend + Backend |
+| React           | UI Components      |
+| TypeScript      | Type Safety        |
+| Tailwind CSS    | Styling            |
+| Axios           | API Requests       |
+| React Hot Toast | Notifications      |
+| Nodemailer      | OTP Emails         |
+| SQLite3         | Database           |
+| Git & GitHub    | Version Control    |
+| Vercel          | Deployment         |
+
+---
+
+# Project Structure
+
+```text
+student-management/
+│
+├── app/
+├── components/
+├── services/
+├── database/
+├── types/
+├── utils/
+├── public/
+└── README.md
+```
+
+---
+
+# Authentication Flow
+
+```text
+User Login
+↓
+Validate Credentials
+↓
+Send OTP Email
+↓
+Verify OTP
+↓
+Generate Tokens
+↓
+Store Token
+↓
+Dashboard Access
+```
+
+---
+
+# Roles
+
+## Admin
+
+```text
+Create
+Edit
+Delete
+View
+```
+
+---
+
+## User
+
+```text
+View Only
+```
+
+---
+
+# Installation
+
+## Clone Repository
+
+```bash
+git clone https://github.com/ahmadsaf39/FnalExamNode.js.git
+```
+
+---
+
+## Open Project
+
+```bash
+cd student-management
+```
+
+---
+
+## Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+# Environment Variables
+
+Create:
+
+```text
+.env.local
+```
+
+Add:
+
+```env
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_google_app_password
+NEXT_PUBLIC_API_URL=http://localhost:3000/api
+```
+
+---
+
+# Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Production Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The project is deployed using:
 
-## Learn More
+```text
+Vercel + GitHub CI/CD
+```
 
-To learn more about Next.js, take a look at the following resources:
+Every Git push automatically redeploys the application.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# SQLite Database
 
-## Deploy on Vercel
+Database file:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```text
+database/students.db
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Table:
+
+```sql
+students
+```
+
+Columns:
+
+```text
+id
+name
+email
+```
+
+---
+
+# OTP Email System
+
+OTP emails are sent using:
+
+```text
+Nodemailer + Gmail SMTP
+```
+
+Environment variables securely store email credentials.
+
+---
+
+# CI/CD Pipeline
+
+```text
+VS Code
+↓
+Git Commit
+↓
+Git Push
+↓
+GitHub
+↓
+Vercel
+↓
+Automatic Build
+↓
+Automatic Deployment
+```
+
+---
+
+# API Routes
+
+## Students API
+
+```http
+GET    /api/students
+POST   /api/students
+PUT    /api/students/:id
+DELETE /api/students/:id
+```
+
+---
+
+## OTP API
+
+```http
+POST /api/send-otp
+```
+
+---
+
+# Test Accounts
+
+## Admin
+
+```text
+username: admin
+password: 1234
+```
+
+---
+
+## User
+
+```text
+username: user
+password: 1234
+```
+
+---
+
+# Security Features
+
+- OTP Verification
+- Protected Routes
+- Role-Based Authorization
+- Environment Variables
+- Token Authentication
+- Axios Interceptor
+
+---
+
+# Author
+
+```text
+Ahmad Safarjalani
+Computer Science Student
+```
