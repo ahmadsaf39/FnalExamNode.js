@@ -1,16 +1,31 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { login } from "@/services/auth.service";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  const handleLogin = () => {
-    console.log({
-      username,
-      password,
-    });
+  const [username, setUsername] =
+    useState("");
+
+  const [password, setPassword] =
+    useState("");
+
+  const handleLogin = async () => {
+    try {
+      const data = await login(
+        username,
+        password
+      );
+
+      console.log(data);
+
+      router.push("/otp");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
