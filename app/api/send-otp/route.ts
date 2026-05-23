@@ -2,7 +2,11 @@ import nodemailer from "nodemailer";
 
 export async function POST() {
   try {
-    const otp = "0000";
+    const otp = Math.floor(
+      1000 + Math.random() * 9000
+    ).toString();
+
+    console.log("Generated OTP:", otp);
 
     const transporter =
       nodemailer.createTransport({
@@ -33,6 +37,7 @@ export async function POST() {
       success: true,
       message:
         "OTP email sent successfully",
+      otp,
     });
   } catch (error) {
     console.error(error);
