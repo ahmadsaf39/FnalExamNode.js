@@ -1,48 +1,91 @@
-import api from "./api";
+import {
+  Student,
+  CreateStudentRequest,
+} from "@/types/student.types";
 
-export const getStudents = async () => {
-  const response = await api.get(
-    "/students"
-  );
+const STORAGE_KEY = "students";
 
-  return response.data;
-};
+export const getStudents =
+  async (): Promise<Student[]> => {
+    const students =
+      localStorage.getItem(
+        STORAGE_KEY
+      );
 
-export const createStudent = async (
-  studentData: {
-    name: string;
-    email: string;
-  }
-) => {
-  const response = await api.post(
-    "/students",
-    studentData
-  );
+    return students
+      ? JSON.parse(students)
+      : [];
+  };
 
-  return response.data;
-};
+export const createStudent =
+  async (
+    studentData: CreateStudentRequest
+  ) => {
+    const students =
+      await getStudents();
 
-export const updateStudent = async (
-  studentId: number,
-  studentData: {
-    name: string;
-    email: string;
-  }
-) => {
-  const response = await api.put(
-    `/students/${studentId}`,
-    studentData
-  );
+    const newStudent: Student = {
+      id: Date.now(),
 
-  return response.data;
-};
+      name: studentData.name,
 
-export const deleteStudent = async (
-  studentId: number
-) => {
-  const response = await api.delete(
-    `/students/${studentId}`
-  );
+      email: studentData.email,
+    };
 
-  return response.data;
-};
+    const updatedStudents = [
+      ...students,
+      newStudent,
+    ];
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(updatedStudents)
+    );
+
+    return newStudent;
+  };
+
+export const updateStudent =
+  async (
+    studentId: number,
+    studentData: CreateStudentRequest
+  ) => {
+    const students =
+      await getStudents();
+
+    const updatedStudents =
+      students.map((student) =>
+        student.id === studentId
+          ? {
+              ...student,
+              ...studentData,
+            }
+          : student
+      );
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(updatedStudents)
+    );
+
+    return updatedStudents;
+  };
+
+export const deleteStudent =
+  async (studentId: number) => {
+    const students =
+      await getStudents();
+
+    const updatedStudents =
+      students.filter(
+        (student) =>
+          student.id !== studentId
+      );
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(updatedStudents)
+    );
+
+    return updatedStudents;
+  };
