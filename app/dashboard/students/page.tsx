@@ -11,6 +11,7 @@ import {
   getStudents,
   deleteStudent,
   createStudent,
+  updateStudent,
 } from "@/services/student.service";
 
 import {
@@ -33,37 +34,36 @@ export default function StudentsPage() {
   const [error, setError] =
     useState("");
 
+  useEffect(() => {
+    async function fetchStudents() {
+      try {
+        setLoading(true);
+
+        const data =
+          await getStudents();
+
+        setStudents(data);
+      } catch (error) {
+        console.error(error);
+
+        setError(
+          "Failed to load students"
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchStudents();
+  }, []);
+
   const loadStudents = async () => {
     try {
-      setLoading(true);
-
       const data = await getStudents();
 
       setStudents(data);
     } catch (error) {
       console.error(error);
-
-      setError(
-        "Failed to load students"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleDelete = async (
-    id: number
-  ) => {
-    try {
-      await deleteStudent(id);
-
-      loadStudents();
-    } catch (error) {
-      console.error(error);
-
-      setError(
-        "Failed to delete student"
-      );
     }
   };
 
@@ -93,28 +93,43 @@ export default function StudentsPage() {
       }
     };
 
-  useEffect(() => {
-  async function fetchStudents() {
+  const handleDelete = async (
+    id: number
+  ) => {
     try {
-      setLoading(true);
+      await deleteStudent(id);
 
-      const data =
-        await getStudents();
-
-      setStudents(data);
+      loadStudents();
     } catch (error) {
       console.error(error);
 
       setError(
-        "Failed to load students"
+        "Failed to delete student"
       );
-    } finally {
-      setLoading(false);
     }
-  }
+  };
 
-  fetchStudents();
-}, []);
+  const handleEdit = async (
+    id: number,
+    name: string,
+    email: string
+  ) => {
+    try {
+      await updateStudent(id, {
+        name,
+        email,
+      });
+
+      loadStudents();
+    } catch (error) {
+      console.error(error);
+
+      setError(
+        "Failed to update student"
+      );
+    }
+  };
+
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -151,6 +166,7 @@ export default function StudentsPage() {
             name={student.name}
             email={student.email}
             onDelete={handleDelete}
+            onEdit={handleEdit}
           />
         ))}
       </div>
