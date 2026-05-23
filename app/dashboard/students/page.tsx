@@ -34,6 +34,9 @@ export default function StudentsPage() {
   const [error, setError] =
     useState("");
 
+  const role =
+    localStorage.getItem("role");
+
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -148,15 +151,17 @@ export default function StudentsPage() {
         </div>
       )}
 
-      <AddStudentForm
-        name={name}
-        email={email}
-        setName={setName}
-        setEmail={setEmail}
-        onSubmit={
-          handleCreateStudent
-        }
-      />
+      {role === "Admin" && (
+        <AddStudentForm
+          name={name}
+          email={email}
+          setName={setName}
+          setEmail={setEmail}
+          onSubmit={
+            handleCreateStudent
+          }
+        />
+      )}
 
       <div className="space-y-4">
         {students.map((student) => (

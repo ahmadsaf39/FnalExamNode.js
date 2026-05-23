@@ -1,13 +1,14 @@
+"use client";
+
 export default function DashboardPage() {
+  const role =
+    localStorage.getItem("role");
+
   return (
     <div>
       <h1 className="text-3xl font-bold">
-        Dashboard
+        Welcome to {role} Dashboard
       </h1>
-
-      <p className="mt-4">
-        Welcome to the admin dashboard.
-      </p>
     </div>
   );
 }
