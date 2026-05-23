@@ -1,12 +1,29 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { verifyOtp } from "@/services/auth.services";
 
 export default function OtpPage() {
+  const router = useRouter();
+
   const [otp, setOtp] = useState("");
 
-  const handleVerifyOtp = () => {
-    console.log(otp);
+  const handleVerifyOtp = async () => {
+    try {
+      const data = await verifyOtp(otp);
+
+      console.log(data);
+
+      localStorage.setItem(
+        "token",
+        data.accessToken
+      );
+
+      router.push("/dashboard");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -19,7 +36,7 @@ export default function OtpPage() {
         <div className="mb-4">
           <input
             type="text"
-            placeholder="Enter OTP Code"
+            placeholder="Enter OTP"
             value={otp}
             onChange={(e) =>
               setOtp(e.target.value)
