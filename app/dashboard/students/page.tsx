@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 
 import StudentCard from "@/components/tables/StudentCard";
+import AddStudentForm from "@/components/forms/AddStudentForm";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import ErrorMessage from "@/components/ui/ErrorMessage";
 
 import {
   getStudents,
@@ -10,11 +13,10 @@ import {
   createStudent,
 } from "@/services/student.service";
 
-interface Student {
-  id: number;
-  name: string;
-  email: string;
-}
+import {
+  Student,
+  CreateStudentRequest,
+} from "@/types/student.types";
 
 export default function StudentsPage() {
   const [students, setStudents] =
@@ -25,13 +27,27 @@ export default function StudentsPage() {
   const [email, setEmail] =
     useState("");
 
+  const [loading, setLoading] =
+    useState(false);
+
+  const [error, setError] =
+    useState("");
+
   const loadStudents = async () => {
     try {
+      setLoading(true);
+
       const data = await getStudents();
 
       setStudents(data);
     } catch (error) {
       console.error(error);
+
+      setError(
+        "Failed to load students"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,16 +60,25 @@ export default function StudentsPage() {
       loadStudents();
     } catch (error) {
       console.error(error);
+
+      setError(
+        "Failed to delete student"
+      );
     }
   };
 
   const handleCreateStudent =
     async () => {
       try {
-        await createStudent({
-          name,
-          email,
-        });
+        const studentData: CreateStudentRequest =
+          {
+            name,
+            email,
+          };
+
+        await createStudent(
+          studentData
+        );
 
         setName("");
         setEmail("");
@@ -61,23 +86,38 @@ export default function StudentsPage() {
         loadStudents();
       } catch (error) {
         console.error(error);
+
+        setError(
+          "Failed to create student"
+        );
       }
     };
 
   useEffect(() => {
-    async function fetchStudents() {
-      try {
-        const data =
-          await getStudents();
+  async function fetchStudents() {
+    try {
+      setLoading(true);
 
-        setStudents(data);
-      } catch (error) {
-        console.error(error);
-      }
+      const data =
+        await getStudents();
+
+      setStudents(data);
+    } catch (error) {
+      console.error(error);
+
+      setError(
+        "Failed to load students"
+      );
+    } finally {
+      setLoading(false);
     }
+  }
 
-    fetchStudents();
-  }, []);
+  fetchStudents();
+}, []);
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div>
@@ -85,42 +125,23 @@ export default function StudentsPage() {
         Students
       </h1>
 
-      <div className="mb-6 rounded border p-4">
-        <h2 className="mb-4 text-xl font-bold">
-          Add Student
-        </h2>
-
+      {error && (
         <div className="mb-4">
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) =>
-              setName(e.target.value)
-            }
-            className="w-full border p-3"
+          <ErrorMessage
+            message={error}
           />
         </div>
+      )}
 
-        <div className="mb-4">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
-            className="w-full border p-3"
-          />
-        </div>
-
-        <button
-          onClick={handleCreateStudent}
-          className="bg-black px-4 py-2 text-white"
-        >
-          Add Student
-        </button>
-      </div>
+      <AddStudentForm
+        name={name}
+        email={email}
+        setName={setName}
+        setEmail={setEmail}
+        onSubmit={
+          handleCreateStudent
+        }
+      />
 
       <div className="space-y-4">
         {students.map((student) => (
