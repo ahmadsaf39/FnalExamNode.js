@@ -19,7 +19,7 @@ export default function Navbar() {
   return (
     <header className="flex items-center justify-between border-b p-4">
       <h1 className="text-2xl font-bold">
-        Student Management System TEST
+        Student Management System
       </h1>
 
       <button
